@@ -1,0 +1,7 @@
+- insert:
+    - id: mcp-burpsuite-bridge
+      name: dsh-plugin-burpsuite-mcp
+      config:
+        bridgeUrl: !!js process.env.BURP_MCP_BRIDGE_URL ?? 'http://127.0.0.1:9639'
+        toolCallTimeoutMs: 120000
+        reconnectMaxAttempts: 10

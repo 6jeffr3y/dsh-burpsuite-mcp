@@ -1,0 +1,8 @@
+node_modules/
+__pycache__/
+*.pyc
+*.tgz
+*.tgz.sha256
+artifacts/
+coverage/
+.playwright-cli/
