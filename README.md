@@ -38,7 +38,7 @@ DSH bundle 与 Burp 扩展分为两个进程。Bundle 内置 Python stdio MCP se
 | 组件 | 当前基线 |
 | --- | --- |
 | DSH bundle | `0.3.1` |
-| DeepSeek Harness | `0.1.2-alpha.1` |
+| DeepSeek Harness | `0.2.0-rc.2` |
 | Python MCP SDK | `mcp==1.26.0` |
 | Burp bridge JAR | `2.1.0` |
 | Burp Suite 实测版本 | Professional `2026.4.2-47702` |

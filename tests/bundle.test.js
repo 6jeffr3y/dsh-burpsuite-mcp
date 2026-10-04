@@ -22,21 +22,23 @@ test('host plugin mounts the bundled stdio server with isolated runtime data', (
   process.env.DSH_HOME = '/tmp/dsh-burpsuite-mcp-test'
 
   let mounted
-  const scope = {
-    get: () => ({ bridgeUrl: 'http://127.0.0.1:9639', toolCallTimeoutMs: 12_000, reconnectMaxAttempts: 4 }),
-    watch: () => () => {},
-  }
+  const listeners = new Map()
+  const config = plugin.Config({ bridgeUrl: 'http://127.0.0.1:9639', toolCallTimeoutMs: 12_000, reconnectMaxAttempts: 4 })
+  const child = Promise.resolve()
+  child.update = async next => { mounted.config = next }
   const ctx = {
-    settings: { register: () => scope },
+    settings: { configure: options => { assert.deepEqual(options, { auto: false }); return () => {} } },
     plugin: (subject, config) => {
       mounted = { subject, config }
-      return Promise.resolve({ update: async () => {} })
+      return child
     },
     effect: factory => factory(),
+    on: (name, listener) => { listeners.set(name, listener); return () => {} },
   }
+  ctx.fiber = {}
 
   try {
-    plugin.apply(ctx, scope.get())
+    plugin.apply(ctx, config)
     assert.equal(plugin.name, 'burpsuite-mcp-bundle')
     assert.equal(mounted.config.transport, 'stdio')
     assert.equal(mounted.config.serverName, 'burpsuite_mcp_bridge')
@@ -46,6 +48,8 @@ test('host plugin mounts the bundled stdio server with isolated runtime data', (
     assert.equal(mounted.config.env.BURP_MCP_PLUGIN_ROOT, '/tmp/dsh-burpsuite-mcp-test/burp-mcp')
     assert.equal(mounted.config.toolCallTimeoutMs, 12_000)
     assert.equal(mounted.config.reconnect.maxAttempts, 4)
+    assert.ok(listeners.has('internal/config'))
+    assert.ok(listeners.has('loader/volatile-update'))
   } finally {
     if (previousHome === undefined) delete process.env.DSH_HOME
     else process.env.DSH_HOME = previousHome

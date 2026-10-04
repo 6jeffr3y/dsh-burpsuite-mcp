@@ -60,7 +60,7 @@
   },
   "peerDependencies": {
     "@deepseek-ai/dsh-mcp-client": "^0.2.0-rc.2",
-    "@deepseek-ai/schemastery": "^3.18.1"
+    "@deepseek-ai/schemastery": "^3.18.4"
   },
   "peerDependenciesMeta": {
     "@deepseek-ai/dsh-mcp-client": {
@@ -72,6 +72,6 @@
   },
   "devDependencies": {
     "@deepseek-ai/dsh-mcp-client": "0.2.0-rc.2",
-    "@deepseek-ai/schemastery": "3.18.1"
+    "@deepseek-ai/schemastery": "3.18.4"
   }
 }
