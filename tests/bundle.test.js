@@ -85,21 +85,29 @@ test('client bundle registers one localized settings card', async () => {
   let dictionaries
   let slot
   const scope = { marker: 'settings-scope' }
+  const translate = key => key
   const ctx = {
     effect: factory => factory(),
-    locale: { register: (namespace, value) => { dictionaries = { namespace, value }; return () => {} } },
-    settingsScope: { bind: options => { assert.equal(options.namespace, 'burpsuite-mcp'); return scope } },
+    locale: {
+      bind: namespace => { assert.equal(namespace, 'burpsuite-mcp.settings'); return translate },
+      register: (namespace, value) => { dictionaries = { namespace, value }; return () => {} },
+    },
+    configForms: {
+      get: namespace => { assert.equal(namespace, 'burpsuite-mcp'); return scope },
+      whileServed: (namespaces, register) => { assert.equal(namespaces.length, 1); assert.equal(namespaces[0], 'burpsuite-mcp'); return register(new Set(namespaces)) },
+    },
     slots: {
-      inject: (name, factory) => { assert.equal(name, 'settings.plugin.item'); factory() },
+      inject: (name, factory) => { assert.equal(name, 'plugins.item'); factory() },
       register: value => { slot = value; return () => {} },
     },
   }
 
   client.apply(ctx)
-  assert.deepEqual(Array.from(client.inject), ['slots', 'locale', 'settingsScope'])
+  assert.deepEqual(Array.from(client.inject), ['slots', 'locale', 'configForms'])
   assert.equal(dictionaries.namespace, 'burpsuite-mcp.settings')
   assert.equal(dictionaries.value.zh.title, 'BurpSuite MCP')
-  assert.equal(slot.key, 'burpsuite-mcp')
+  assert.equal(slot.id, 'burpsuite-mcp')
   assert.equal(slot.inject().scope, scope)
+  assert.equal(slot.inject().t, translate)
   assert.equal(styles[0].dataset.pluginCss, 'dsh-plugin-burpsuite-mcp')
 })
