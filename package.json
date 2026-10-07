@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-burpsuite-mcp",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "type": "module",
   "main": "./lib/index.js",
   "description": "DeepSeek Harness bundle for the BurpSuite MCP Bridge",

@@ -37,7 +37,7 @@ DSH bundle 与 Burp 扩展分为两个进程。Bundle 内置 Python stdio MCP se
 
 | 组件 | 当前基线 |
 | --- | --- |
-| DSH bundle | `0.3.1` |
+| DSH bundle | `0.3.2` |
 | DeepSeek Harness | `0.2.1-alpha.1` |
 | Python MCP SDK | `mcp==1.26.0` |
 | Burp bridge JAR | `2.1.0` |
@@ -49,7 +49,7 @@ DSH bundle 与 Burp 扩展分为两个进程。Bundle 内置 Python stdio MCP se
 
 ### 1. 安装 Burp 扩展
 
-从 [v0.3.1 Release](https://github.com/6jeffr3y/dsh-burpsuite-mcp/releases/tag/v0.3.1) 下载：
+从 [v0.3.2 Release](https://github.com/6jeffr3y/dsh-burpsuite-mcp/releases/tag/v0.3.2) 下载：
 
 ```text
 burpsuite-mcp-bridge-2.1.0-all.jar
@@ -80,7 +80,7 @@ python3 -m pip install 'mcp==1.26.0'
 ### 3. 安装 DSH bundle
 
 ```sh
-dsh plugin --profile web add github:6jeffr3y/dsh-burpsuite-mcp#v0.3.1
+dsh plugin --profile web add github:6jeffr3y/dsh-burpsuite-mcp#v0.3.2
 ```
 
 重启 Web profile 后生效：
